@@ -34,5 +34,4 @@ cd SwiftAudioRecording
 ### Test
 Run the audio recorder application at **SwiftAudioRecording/build/Release/AudioRecord.app**  
 Play any sound on the device  
-Tap Record button on the application  
-Tap Record button again to stop recording
+Click **Record** button on the application. Click **Record** button again to stop recording
