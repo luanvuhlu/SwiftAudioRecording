@@ -1,5 +1,5 @@
 # SwiftAudioRecording
-a simple audio recording example using Swift, AVFoundation
+a simple audio recording example for MacOS using Swift, AVFoundation
 
 ## Notice
 This source code is design for recording using Soundflower, but it doesn't limit you. You can use any input device or the default device.  
@@ -19,8 +19,8 @@ cd Soundflower
 ./installer.rb
 ```
 
-Install the sound driver at **Soundfower/Build/Soundflower-{version}.dmg**
-Change the output device to **Soundflower (2ch)**
+Install the sound driver at **Soundfower/Build/Soundflower-{version}.dmg**  
+Change the output device to **Soundflower (2ch)**  
 
 
 ### Build Audio Record app
