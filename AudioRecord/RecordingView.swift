@@ -8,7 +8,7 @@ struct RecordingView: View {
         Button(action: {
             tapped()
         }) {
-            Text("Hello World").frame(maxWidth: 100, maxHeight: 100)
+            Text("Record").frame(maxWidth: 100, maxHeight: 100)
             
         }
     }
