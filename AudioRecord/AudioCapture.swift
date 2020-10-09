@@ -10,6 +10,7 @@ class AudioCapture: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
         AVNumberOfChannelsKey : 1,
         AVSampleRateKey : 44100]
     let captureSession = AVCaptureSession()
+    var captureConnection: AVCaptureConnection?
     var audioWriter: AVAssetWriter?
     var audioWriterInput: AVAssetWriterInput?
     var sessionAtSourceTime: CMTime?
@@ -20,7 +21,8 @@ class AudioCapture: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
         super.init()
         requestAuthorization()
         let queue = DispatchQueue(label: "AudioSessionQueue", attributes: [])
-        let captureDevice = getDevices(name: "Soundflower (2ch)")
+        let captureDevice = getDevices(name: "Built-in Microphone")
+//        let captureDevice = getDevices(name: "Soundflower (2ch)")
         var audioInput : AVCaptureDeviceInput? = nil
         var audioOutput : AVCaptureAudioDataOutput? = nil
         do {
@@ -50,8 +52,8 @@ class AudioCapture: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
 
             print("Starting capture session")
             captureSession.startRunning()
+            captureConnection = audioOutput?.connection(with: AVMediaType.audio)
         }
-        audioOutput?.connection(with: AVMediaType.audio)
     }
 
     func record() {
@@ -71,7 +73,16 @@ class AudioCapture: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
     
     func startRecording() {
         print("Recording")
+        print("Starting capture session")
         
+        captureSession.startRunning()
+        
+        captureConnection?.audioChannels.forEach{channel in
+            // The volume property indicates the current volume or gain of the receiver as a floating point value between 0.0 -> 1.0. If you desire to boost the gain in software, you may specify a a value greater than 1.0.
+            channel.volume = 1.0
+            print(channel.className)
+            print(channel.volume)
+        }
         sessionAtSourceTime = nil
         setUpWriter()
         if audioWriter?.status == .writing {
@@ -155,7 +166,7 @@ class AudioCapture: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
                 (audioWriterInput?.isReadyForMoreMediaData ?? false) {
                 // write audio buffer
                 audioWriterInput?.append(sampleBuffer)
-                print("audio buffering")
+//                print("audio buffering")
             }
     }
     
